@@ -88,7 +88,7 @@ public class ServidorHilo extends Thread {
 						}
 
 					}else {
-						if (datos.equals("Jugemos")) {
+						if ((datos.equals("Jugemos"))&&(jugando==false)) {
 							
 							Servidor.textarea.append(cadena + "\n"); 
 							texto = Servidor.textarea.getText(); 
