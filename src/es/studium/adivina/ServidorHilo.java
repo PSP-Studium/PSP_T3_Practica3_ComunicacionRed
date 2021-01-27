@@ -36,7 +36,7 @@ public class ServidorHilo extends Thread {
 	/**
 	 * En el método run() lo primero que hacemos es enviar todos los mensajes actuales al cliente que se acaba de incorporar
 	 */
-	public void run() 
+	public void run() throws ArrayIndexOutOfBoundsException 
 	{ 
 		Servidor.mensaje.setText("Número de conexiones actuales: " + Servidor.ACTUALES); 
 		Servidor.mensaje3.setText("Número: " + Servidor.random);
@@ -67,40 +67,60 @@ public class ServidorHilo extends Thread {
 					{
 						if(Integer.parseInt(datos) < Servidor.random)
 						{
-							Servidor.textarea.append("> " + nombre + " piensa que el número es el " + datos + ", pero el número es MAYOR. \n");
+							Servidor.textarea.append("SERVIDOR> " + nombre + " piensa que el número es el " + datos + ", pero el número es MAYOR. \n");
 							texto = Servidor.textarea.getText();
 							EnviarMensajes(texto);
 							Thread.sleep(3000);
 						}
 						else if((Integer.parseInt(datos) > Servidor.random)&&(jugando==true))
 						{
-							Servidor.textarea.append("> " + nombre + " piensa que el número es el " + datos + ", pero el número es MENOR. \n");
+							Servidor.textarea.append("SERVIDOR> " + nombre + " piensa que el número es el " + datos + ", pero el número es MENOR. \n");
 							texto = Servidor.textarea.getText();
 							EnviarMensajes(texto);
 							Thread.sleep(3000);
 						}
 						else if((Integer.parseInt(datos) == Servidor.random)&&(jugando==true))
 						{
-							Servidor.textarea.append("> " + nombre + " piensa que el número es el " + datos + ", y ha ACERTADO! \n" + "El ganador ha sido: " + nombre + ". \n" + "El juego ha terminado \n"+"¿Quieres volver a jugar? Para volver a jugar, escribe Jugemos. \n");	
+							Servidor.textarea.append("SERVIDOR> " + nombre + " piensa que el número es el " + datos + ", y ha ACERTADO! \n" + "SERVIDOR> El ganador ha sido: " + nombre + ". \n" + "SERVIDOR> El juego ha terminado \n"+"SERVIDOR> ¿Quieres volver a jugar? Para volver a jugar, escribe *JUGAR. \n");	
 							texto = Servidor.textarea.getText();
 							EnviarMensajes(texto);
 							jugando=false;
 						}
 
 					}else {
-						if ((datos.equals("Jugemos"))&&(jugando==false)) {
+						if (((datos.equals("*JUGAR"))||(datos.equals("*jugar")))&&(jugando==false)) {
 							
 							Servidor.textarea.append(cadena + "\n"); 
 							texto = Servidor.textarea.getText(); 
 							EnviarMensajes(texto);
 							jugar=true;
 							if(jugar==true) {
+								Servidor.textarea.append("SERVIDOR>  Empezamos a jugar, escribe un número del 1 al 100. Y suerte. \n");	
+								texto = Servidor.textarea.getText();
+								EnviarMensajes(texto);
 								Servidor.aleatorio();
 								Servidor.mensaje3.setText("Número: " + Servidor.random);
 								jugar=false;
 								jugando=true;
 								}
-						}else {
+						}else if (((datos.equals("*INSTRUCIONES"))||(datos.equals("*instruciones")))&&(jugando==true)){
+							Servidor.textarea.append(cadena + "\n"); 
+							texto = Servidor.textarea.getText(); 
+							EnviarMensajes(texto);
+							Servidor.textarea.append("SERVIDOR>  Estamos jugando, para jugar escribe un número del 1 al 100. \n");	
+							texto = Servidor.textarea.getText();
+							EnviarMensajes(texto);
+						}
+						else if (((datos.equals("*INSTRUCIONES"))||(datos.equals("*instruciones")))&&(jugando==false)){
+							Servidor.textarea.append(cadena + "\n"); 
+							texto = Servidor.textarea.getText(); 
+							EnviarMensajes(texto);
+							Servidor.textarea.append("SERVIDOR>  No estamos jugando, para jugar escribe *JUGAR. \n");	
+							texto = Servidor.textarea.getText();
+							EnviarMensajes(texto);
+						}
+						else
+						{
 							Servidor.textarea.append(cadena + "\n"); 
 							texto = Servidor.textarea.getText(); 
 							EnviarMensajes(texto);
@@ -110,9 +130,8 @@ public class ServidorHilo extends Thread {
 			}
 			catch (Exception ex) 
 			{ 
-				ex.printStackTrace(); 
 				fin=true; 
-			} 
+			}
 		} 
 	} 
 	/**
@@ -133,7 +152,7 @@ public class ServidorHilo extends Thread {
 		} 
 	} 
 	/**
-	 * Metodo para saber si una cadena enviada es un numero
+	 * Método para saber si una cadena enviada es un numero
 	 * @param cadena Cadena enviada para comprobar si es un número.
 	 * @return Devuelve true si es un numero o false si no lo es
 	 */
