@@ -66,7 +66,7 @@ public class Cliente extends JFrame implements ActionListener {
 		{
 			fentrada = new DataInputStream(socket.getInputStream());
 			fsalida = new DataOutputStream(socket.getOutputStream());
-			String texto = "SERVIDOR> Entra en el chat... " + nombre+"\n"+"SERVIDOR> Para ver las instruciones escribe *INSTRUCIONES";
+			String texto = "SERVIDOR> Entra en el chat... " + nombre+"\n"+"SERVIDOR> Para ver las instrucciones escribe *INSTRUCCIONES";
 			fsalida.writeUTF(texto);
 		}
 		catch (IOException ex)

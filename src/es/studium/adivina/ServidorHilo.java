@@ -103,7 +103,7 @@ public class ServidorHilo extends Thread {
 								jugar=false;
 								jugando=true;
 								}
-						}else if (((datos.equals("*INSTRUCIONES"))||(datos.equals("*instruciones")))&&(jugando==true)){
+						}else if (((datos.equals("*INSTRUCCIONES"))||(datos.equals("*instrucciones")))&&(jugando==true)){
 							Servidor.textarea.append(cadena + "\n"); 
 							texto = Servidor.textarea.getText(); 
 							EnviarMensajes(texto);
@@ -111,7 +111,7 @@ public class ServidorHilo extends Thread {
 							texto = Servidor.textarea.getText();
 							EnviarMensajes(texto);
 						}
-						else if (((datos.equals("*INSTRUCIONES"))||(datos.equals("*instruciones")))&&(jugando==false)){
+						else if (((datos.equals("*INSTRUCCIONES"))||(datos.equals("*instrucciones")))&&(jugando==false)){
 							Servidor.textarea.append(cadena + "\n"); 
 							texto = Servidor.textarea.getText(); 
 							EnviarMensajes(texto);
